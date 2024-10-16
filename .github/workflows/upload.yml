@@ -31,5 +31,5 @@ jobs:
             cd /api
             /root/.local/bin/poetry install
             /root/.local/bin/poetry shell
-            /root/.local/bin/gunicorn -w 1 -b 127.0.0.1:5000 app:app
+            gunicorn -w 1 -b 127.0.0.1:5000 app:app
             
