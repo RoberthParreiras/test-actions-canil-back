@@ -1,0 +1,36 @@
+name: "Deploy the Backend"
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Download changes"
+        uses: actions/checkout@v4
+
+      - name: "Copy files to VPS via ssh key"
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          source: "."
+          target: "/api"
+      
+      - name: "Build the Backend via ssh key"
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /api
+            poetry install
+            poetry shell
+            gunicorn -w 1 -b 127.0.0.1:5000 app:app
+            
