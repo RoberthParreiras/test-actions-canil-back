@@ -37,6 +37,9 @@ jobs:
 
             poetry install
 
+            if [ -f gunicorn.pid ]; then
+              poetry run kill -SIGTERM $(cat gunicorn.pid)
+              rm -f gunicorn.pid
+            fi
 
-
-            poetry run gunicorn -w 1 -b 127.0.0.1:5000 app:app
+            poetry run gunicorn -w 1 -b 127.0.0.1:5000 app:app --pid gunicorn.pid
