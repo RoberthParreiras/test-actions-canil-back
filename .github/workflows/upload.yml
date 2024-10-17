@@ -40,7 +40,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             cd /api
-            pip install poetry
+            pipx install poetry
             poetry install
             poetry shell
             gunicorn -w 1 -b 127.0.0.1:5000 app:app
