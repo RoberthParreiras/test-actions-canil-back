@@ -12,7 +12,7 @@ db = SQLAlchemy(model_class=Base)
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:password@localhost/test"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:canilkrusemark@localhost/test"
 
 db.init_app(app)
 
